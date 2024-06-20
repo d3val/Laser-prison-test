@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserManager : MonoBehaviour
 {
     [SerializeField] GameObject laserPrefab;
+    [SerializeField] GameObject indicatorPrefab;
     [SerializeField] float shootRate = 2.5f;
     private int lasersPerShoot = 3;
 
@@ -25,21 +26,35 @@ public class LaserManager : MonoBehaviour
         int yPos;
         float eulerY;
         float eulerX;
-        
-        yield return new WaitForSeconds(shootRate);
+        List<Vector3> positions = new List<Vector3>();
+        List<Quaternion> rotations = new List<Quaternion>();
 
         for (int i = 0; i < lasersPerShoot; i++)
         {
             xPos = Random.Range((int)spawnLimits.x, (int)spawnLimits.y);
             yPos = Random.Range((int)spawnLimits.x, (int)spawnLimits.y);
+            Vector3 indicatorPos = new Vector3(xPos, 0, yPos);
+            positions.Add(indicatorPos);
+            Instantiate(indicatorPrefab, indicatorPos, Quaternion.identity);
+
 
             eulerX = Random.Range(-rotationLimits.x, rotationLimits.x);
             eulerY = Random.Range(-rotationLimits.y, rotationLimits.y);
-            Quaternion laserRotation = Quaternion.Euler(eulerX, eulerY, 0);
+            rotations.Add(Quaternion.Euler(eulerX, eulerY, 0));
+        }
 
-            Vector3 laserPosition = new Vector3(xPos, 0, yPos);
-            Instantiate(laserPrefab, laserPosition, laserRotation);
+
+        yield return new WaitForSeconds(shootRate);
+
+        for (int i = 0; i < positions.Count; i++)
+        {
+            Instantiate(laserPrefab, positions[i], rotations[i]);
         }
         StartCoroutine(ShootLaser());
+    }
+
+    public void IncreaseLasersPerShoot(int lasersAdded)
+    {
+        lasersPerShoot += lasersAdded;
     }
 }

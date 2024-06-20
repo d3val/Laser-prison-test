@@ -1578,6 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserPrefab: {fileID: 4425819964836621054, guid: a5da13504b2cb5b44a652e947c06cb51, type: 3}
+  indicatorPrefab: {fileID: 8920331213903271326, guid: f3d0a5851873fb24e8661d0d4e72ac3e, type: 3}
   shootRate: 2.5
 --- !u!4 &1197427978
 Transform:
@@ -2238,6 +2239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLifes: 3
+  laserManager: {fileID: 1197427977}
   scoreText: {fileID: 2038240210}
   multiplierText: {fileID: 227743637}
   lifeIcons:
