@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private int scoreMultiplier = 1;
     private bool isPlaying = true;
     private float rawScore;
+    [SerializeField] LaserManager laserManager;
 
     [Header("UI")]
     //UI variables
@@ -40,16 +41,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(IncreaseDificulty(15, 2));
-        StartCoroutine(IncreaseDificulty(40, 3));
-        StartCoroutine(IncreaseDificulty(90, 5));
+        StartCoroutine(IncreaseDificulty(15, 2, 1));
+        StartCoroutine(IncreaseDificulty(40, 3, 2));
+        StartCoroutine(IncreaseDificulty(90, 5, 4));
     }
 
     private void Update()
     {
         if (!isPlaying)
             return;
-        
+
         //When player loses her lifes, the game is over.
         if (playerLifes <= 0)
             EndGame();
@@ -70,17 +71,18 @@ public class GameManager : MonoBehaviour
     }
 
     //Used to increase the difficulty of the game
-    private IEnumerator IncreaseDificulty(float time, int newScoreMultiplier)
+    private IEnumerator IncreaseDificulty(float time, int newScoreMultiplier, int lasersAdded)
     {
         yield return new WaitForSeconds(time);
         scoreMultiplier = newScoreMultiplier;
         multiplierText.text = "X" + newScoreMultiplier;
+        laserManager.IncreaseLasersPerShoot(lasersAdded);
     }
 
     //Substacts one life.
     public void DecreaseLife()
     {
-        if(lifeIconsIndex >= lifeIcons.Count)
+        if (lifeIconsIndex >= lifeIcons.Count)
         {
             Debug.LogError("lifeIconsIndex out of range");
             return;

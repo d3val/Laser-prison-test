@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Invulnerability",
+                    "type": "Button",
+                    "id": "4cc4a6ec-7293-4e4f-8bf6-89656c5a2d53",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -156,6 +165,17 @@
                     "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8558e2ef-9266-4e75-9cd7-66a13824d7cb",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Invulnerability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
