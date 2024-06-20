@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,7 +19,12 @@ public class GameManager : MonoBehaviour
     //UI variables
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI multiplierText;
+    [SerializeField] List<GameObject> lifeIcons;
+    [SerializeField] GameObject GameOverPanel;
+    [SerializeField] TextMeshProUGUI FinalScoreText;
+    private int lifeIconsIndex = 0;
 
+    // Class instance
     public static GameManager instance;
 
     private void Awake()
@@ -27,6 +33,9 @@ public class GameManager : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+
+
+        Time.timeScale = 1;
     }
 
     private void Start()
@@ -40,30 +49,51 @@ public class GameManager : MonoBehaviour
     {
         if (!isPlaying)
             return;
-
+        
+        //When player loses her lifes, the game is over.
         if (playerLifes <= 0)
             EndGame();
 
+        //Score calculation
         rawScore += Time.deltaTime * scoreMultiplier;
         currentScore = (int)rawScore;
         scoreText.text = currentScore.ToString();
-        Debug.Log(scoreMultiplier);
     }
 
+    //Sets some parameters to end the game
     private void EndGame()
     {
         isPlaying = false;
+        GameOverPanel.SetActive(true);
+        FinalScoreText.text = currentScore.ToString();
+        Time.timeScale = 0;
     }
 
+    //Used to increase the difficulty of the game
     private IEnumerator IncreaseDificulty(float time, int newScoreMultiplier)
     {
         yield return new WaitForSeconds(time);
         scoreMultiplier = newScoreMultiplier;
-        multiplierText.text = "X"+newScoreMultiplier;
+        multiplierText.text = "X" + newScoreMultiplier;
     }
 
+    //Substacts one life.
     public void DecreaseLife()
     {
+        if(lifeIconsIndex >= lifeIcons.Count)
+        {
+            Debug.LogError("lifeIconsIndex out of range");
+            return;
+        }
+
         playerLifes--;
+        lifeIcons[lifeIconsIndex].SetActive(false);
+        lifeIconsIndex++;
+    }
+
+    //Restarts the scene to its original state.
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
