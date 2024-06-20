@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(IncreaseDificulty(15, 2, 1));
-        StartCoroutine(IncreaseDificulty(40, 3, 2));
-        StartCoroutine(IncreaseDificulty(90, 5, 4));
+        StartCoroutine(IncreaseDificulty(15, 2, 2));
+        StartCoroutine(IncreaseDificulty(40, 3, 3));
+        StartCoroutine(IncreaseDificulty(90, 5, 6));
     }
 
     private void Update()
