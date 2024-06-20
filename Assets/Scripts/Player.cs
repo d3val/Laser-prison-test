@@ -75,6 +75,6 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Laser"))
-            Debug.Log("Ay!!!");
+            GameManager.instance.DecreaseLife();
     }
 }
