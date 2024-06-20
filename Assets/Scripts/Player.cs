@@ -7,17 +7,21 @@ using UnityEngine.Windows;
 public class Player : MonoBehaviour
 {
 
+    //Movement variables
+    [Header("Movement parameters")]
+    [SerializeField] float moveSpeed = 10.0f;
+    [SerializeField] float rotationSpeed = 100.0f;
+    private float xAxisValue = 0;
+    private float yAxisValue = 0;
+
     //Input system variables
+    [Header("Input Action Asset")]
     [SerializeField] InputActionAsset primaryInputs;
     private InputActionMap gameplayMap;
     private InputAction moveForwardAction;
     private InputAction rotateAction;
 
-    //Movement variables
-    [SerializeField] float moveSpeed = 10.0f;
-    [SerializeField] float rotationSpeed = 100.0f;
-    private float xAxisValue = 0;
-    private float yAxisValue = 0;
+    
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
         moveForwardAction.Disable();
         rotateAction.Disable();
     }
+
     //Methods that read input values
     private void ReadVerticalAxis(InputAction.CallbackContext ctx)
     {
@@ -59,6 +64,7 @@ public class Player : MonoBehaviour
         Move();
     }
 
+    //Moves the player
     private void Move()
     {
         transform.position += Time.deltaTime * moveSpeed * yAxisValue * transform.forward;

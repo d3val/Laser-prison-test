@@ -8,6 +8,7 @@ public class LaserManager : MonoBehaviour
     [SerializeField] float shootRate = 2.5f;
     private int lasersPerShoot = 3;
 
+    //Variables used to limit spawn range.
     private Vector2 spawnLimits = new Vector2(-14, 15);
     private Vector2 rotationLimits = new Vector2(50, 180);
 
@@ -17,7 +18,7 @@ public class LaserManager : MonoBehaviour
         StartCoroutine(ShootLaser());
     }
 
-
+    //Couroutine that controls laser's shot.
     IEnumerator ShootLaser()
     {
         int xPos;
