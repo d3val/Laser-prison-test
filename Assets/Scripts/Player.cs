@@ -65,4 +65,10 @@ public class Player : MonoBehaviour
 
         transform.Rotate(transform.up, Time.deltaTime * rotationSpeed * xAxisValue);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Laser"))
+            Debug.Log("Ay!!!");
+    }
 }
