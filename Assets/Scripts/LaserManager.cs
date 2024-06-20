@@ -39,23 +39,28 @@ public class LaserManager : MonoBehaviour
         GameObject indicatorAux;
         GameObject laserAux;
 
+        //First we spawn indicators for tha lasers
         for (int i = 0; i < lasersPerShoot; i++)
         {
             indicatorAux = GetPooledIndicator();
+            // If there not an available object, we create one and we add it to the list
             if (indicatorAux == null)
             {
                 indicatorAux = Instantiate(laserPrefab);
                 pooledIndicators.Add(indicatorAux);
             }
+
+            //Calculation position
             xPos = Random.Range((int)spawnLimits.x, (int)spawnLimits.y);
             yPos = Random.Range((int)spawnLimits.x, (int)spawnLimits.y);
             Vector3 indicatorPos = new Vector3(xPos, 0, yPos);
             positions.Add(indicatorPos);
 
+            // We aplied position and rotation to the indicator
             indicatorAux.SetActive(true);
             indicatorAux.transform.SetLocalPositionAndRotation(indicatorPos, Quaternion.identity);
 
-
+            //Calculation of rotation
             eulerX = Random.Range(-rotationLimits.x, rotationLimits.x);
             eulerY = Random.Range(-rotationLimits.y, rotationLimits.y);
             rotations.Add(Quaternion.Euler(eulerX, eulerY, 0));
@@ -64,22 +69,26 @@ public class LaserManager : MonoBehaviour
 
         yield return new WaitForSeconds(shootRate);
 
+        //Secondly, we spawn the lasers
         for (int i = 0; i < positions.Count; i++)
         {
             laserAux = GetPooledLaser();
-
-            if(laserAux == null)
+            // If there not an available object, we create one and we add it to the list
+            if (laserAux == null)
             {
                 laserAux = Instantiate(laserPrefab);
                 pooledLasers.Add(laserAux);
             }
-
+            // We aplied position and rotation to the laser
             laserAux.SetActive(true);
             laserAux.transform.SetPositionAndRotation(positions[i], rotations[i]);
         }
+
+        //Repeating the process
         StartCoroutine(ShootLaser());
     }
 
+    //Instatiates initial object for object pooling
     private void PrepareObjects()
     {
         for (int i = 0; i < lasersPoolingCount; i++)
@@ -97,6 +106,7 @@ public class LaserManager : MonoBehaviour
         }
     }
 
+    //Return an available laser object to spawn
     private GameObject GetPooledLaser()
     {
         foreach (GameObject obj in pooledLasers)
@@ -108,6 +118,8 @@ public class LaserManager : MonoBehaviour
         }
         return null;
     }
+
+    //Return an available indicator object to spawn
     private GameObject GetPooledIndicator()
     {
         foreach (GameObject obj in pooledIndicators)
@@ -120,6 +132,7 @@ public class LaserManager : MonoBehaviour
         return null;
     }
 
+    //Increse the amount of active lasers.
     public void IncreaseLasersPerShoot(int lasersAdded)
     {
         lasersPerShoot += lasersAdded;

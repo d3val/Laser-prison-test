@@ -106,6 +106,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //If we hit a laser without invulnerability, we lose a life.
         if (other.CompareTag("Laser") && !isInvencible)
             GameManager.instance.DecreaseLife();
     }
