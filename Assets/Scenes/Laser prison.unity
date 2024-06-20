@@ -1716,6 +1716,8 @@ MonoBehaviour:
   laserPrefab: {fileID: 4425819964836621054, guid: a5da13504b2cb5b44a652e947c06cb51, type: 3}
   indicatorPrefab: {fileID: 8920331213903271326, guid: f3d0a5851873fb24e8661d0d4e72ac3e, type: 3}
   shootRate: 2.5
+  lasersPoolingCount: 25
+  indicatorsPoolingCount: 15
 --- !u!4 &1197427978
 Transform:
   m_ObjectHideFlags: 0
